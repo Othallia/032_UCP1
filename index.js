@@ -25,7 +25,7 @@ db.sequelize.sync()
         app.post("/music", async(req, res)=>{
     const data = req.body;
     try{
-        const music = await db.Music.create(data);
+        const music = await db.music.create(data);
         res.send(music);
     } catch(err){
         res.send(err);
@@ -34,7 +34,7 @@ db.sequelize.sync()
 
 app.get("/music", async(req, res)=>{
     try{
-        const music = await db.Music.findAll();
+        const music = await db.music.findAll();
         res.send(music);
     } catch(err){
         res.send(err);
@@ -46,9 +46,9 @@ app.put("/music/:id", async(req, res)=>{
     const data = req.body;
 
     try{
-        const music = await db.Music.findByPk(id);
+        const music = await db.music.findByPk(id);
         if (!music){
-            return res.status(404).send({message : "Lagu tidak tersedia"});
+            return res.status(404).send({message : "music tidak tersedia"});
         }
         await music.update(data);
         res.send({ message: "music berhasil diupdate", music});
@@ -61,9 +61,9 @@ app.delete("/music/:id", async(req, res)=>{
     const id = req.params.id;
 
     try{
-        const music = await db.Music.findByPk(id);
+        const music = await db.music.findByPk(id);
         if (!music){
-            return res.status(404).send({message : "Lagu tidak tersedia"});
+            return res.status(404).send({message : "music tidak tersedia"});
         }
         await music.destroy();
         res.send({ message: "music berhasil dihapus"});

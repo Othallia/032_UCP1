@@ -8,3 +8,27 @@ app.use(express.urlencoded({
     extended: false 
 })
 );
+app.listen(PORT, () => {
+    console.log("Server started on port 3000");
+});
+
+db.sequelize.sync()
+    .then((result) => {
+        app.listen(3000, () => {
+            console.log("Server started");
+        })
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+
+        app.post("/music", async(req, res)=>{
+    const data = req.body;
+    try{
+        const music = await db.Music.create(data);
+        res.send(music);
+    } catch(err){
+        res.send(err);
+    }
+})
+

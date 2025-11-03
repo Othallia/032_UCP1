@@ -40,3 +40,23 @@ app.get("/music", async(req, res)=>{
         res.send(err);
     }
 })
+
+app.put("/music/:id", async(req, res)=>{
+    const id = req.params.id;
+    const data = req.body;
+
+    try{
+        const music = await db.Music.findByPk(id);
+        if (!music){
+            return res.status(404).send({message : "Lagu tidak tersedia"});
+        }
+        await music.update(data);
+        res.send({ message: "music berhasil diupdate", music});
+    } catch(err){;
+        res.status(500).send(err);
+    }
+})
+
+
+
+

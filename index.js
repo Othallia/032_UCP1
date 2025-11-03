@@ -57,6 +57,20 @@ app.put("/music/:id", async(req, res)=>{
     }
 })
 
+app.delete("/music/:id", async(req, res)=>{
+    const id = req.params.id;
+
+    try{
+        const music = await db.Music.findByPk(id);
+        if (!music){
+            return res.status(404).send({message : "Lagu tidak tersedia"});
+        }
+        await music.destroy();
+        res.send({ message: "music berhasil dihapus"});
+    } catch(err){;
+        res.status(500).send(err);
+    }
+})
 
 
 

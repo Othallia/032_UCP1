@@ -32,3 +32,11 @@ db.sequelize.sync()
     }
 })
 
+app.get("/music", async(req, res)=>{
+    try{
+        const music = await db.Music.findAll();
+        res.send(music);
+    } catch(err){
+        res.send(err);
+    }
+})
